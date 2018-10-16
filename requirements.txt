@@ -1,4 +1,5 @@
 Flask==0.12
 jusibe
 requests
+pymongo
 gunicorn==19.7.1
