@@ -1,0 +1,35 @@
+#stock-box{
+    width: 100px;
+    height: 227px;
+    margin-right: 20px;
+    background: #F2F2F2;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+#purchase-box{
+    width: 100px;
+    height: 227px;
+    margin-right: 20px;
+    background: #F2F2F2;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+#sales-box{
+    width: 100px;
+    height: 227px;
+    margin-right: 20px;
+    background: #F2F2F2;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+#patient-box{
+    width: 100px;
+    height: 227px;
+    background: #F2F2F2;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.card2{
+    margin-right: 20px;  
+}
+

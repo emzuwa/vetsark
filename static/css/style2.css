@@ -1,0 +1,76 @@
+    .hero-text h2 {
+        position: absolute;
+        top: 70%;
+        left: 28%;
+        font-weight: 700;
+        line-height: 1.6;
+        transform: translate(-50%, -50%);
+        color:rgb(41, 113, 180);
+    }
+
+    .logo{
+        margin: 20px;
+        margin-right: 30px;
+    }
+
+    .logo img{
+        height: 100px;
+        width: 100px;
+    }
+
+    ul {
+    list-style-type: none;
+    margin: 20px;
+    padding: 0;
+    overflow: hidden;
+}
+
+li {
+    float: left;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+li a {
+    display: block;
+    color: rgb(79, 156, 201);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    border-bottom-color: blue;
+}
+
+@media screen and (min-width: 1127px) {
+    .hero-text h2 {
+        position: absolute;
+        top: 67%;
+        left: 24%;
+        font-weight: 700;
+        line-height: 1.6;
+        transform: translate(-50%, -50%);
+        color:rgb(41, 113, 180);
+    } 
+}
+
+@media (min-width: 20px) and (max-width: 450px) {
+    .hero-text h2 {
+        position: absolute;
+        top: 67%;
+        left: 38%;
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 1.6;
+        color:rgb(41, 113, 180);
+    } 
+    
+    .logo img{
+        height: 50px;
+        width: 50px;
+    }
+}
+
+
+

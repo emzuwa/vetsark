@@ -1,0 +1,6 @@
+record sales forms control.
+make unit price come by default from stock item recorded.
+unit price vs sales amount in record stocks.
+
+Poultry, cattle, pig.
+Livestocks. Pets.

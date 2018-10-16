@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='scss/common/global.scss') }}">
+	
+	
+	<!-- Bootstrap 3.3.2 -->
+    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <style>
+            .main { 
+            background: #c3e6eb;
+            margin: 0px;
+        }
+
+        .signup{
+            margin: 0px;
+        }
+
+
+        body{
+            background: #c3e6eb; 
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            background-image: url('images/bg.jpg')
+        }
+
+    </style>
+
+    <div class="main">
+
+        <!-- Sign up form -->
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h2 class="form-title">Sign up</h2>
+						
+						<h3 style="color:red;">Email has already been used. Please log in or contact admin for any issue.</h3>
+						
+                        <form method="POST" class="register-form" id="register-form" action="/signup_entry">
+                            <div class="form-group">
+                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="name" id="name" placeholder=" Name"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="email"><i class="zmdi zmdi-email"></i></label>
+                                <input type="email" name="email" id="email" placeholder="Email"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="pass" id="pass" placeholder="Password"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" onChange="checkPasswordMatch();"/>
+                            </div>
+							
+							<div class="registrationFormAlert" id="divCheckPasswordMatch"> </div>
+							
+							<div class="form-group">
+								<p>Sign up as a:</p>
+								<select name="user_category" class="form-control">
+									<option selected>Veterinarian</option>
+									<option>Para Veterinarian</option>
+									<option>Farmer</option>
+									<option>Others</option>
+								</select>
+							</div>
+							
+							<div class="form-group">
+								<p>Select Alpha Prime Category:</p>
+								<select name="prime_category" class="form-control">
+									<option selected>Prime Tracker</option>
+									<option>Prime Manager (Basic)</option>
+									<option>Prime Manager Pro</option>
+									<option>Prime Elite</option>
+								</select>
+							</div>
+							
+							<div class="form-group form-button">
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+                            </div>
+							
+                        </form>
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="{{ url_for('static', filename='images/dog-cat.png') }}" alt="sing up image"></figure>
+                        <a href="#" class="signup-image-link">I am already member</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    <!-- JS -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+	
+	<script>
+	function checkPasswordMatch() {
+		var password = $("#pass").val();
+		var confirmPassword = $("#re_pass").val();
+
+		if (password != confirmPassword)
+			$("#divCheckPasswordMatch").html("Passwords do not match!");
+		else
+			$("#divCheckPasswordMatch").html("Passwords match.");
+	}
+
+	$(document).ready(function () {
+	   $("#re_pass").keyup(checkPasswordMatch);
+	});
+	</script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

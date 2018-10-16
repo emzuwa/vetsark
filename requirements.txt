@@ -1,0 +1,4 @@
+Flask==0.12
+jusibe
+requests
+gunicorn==19.7.1
