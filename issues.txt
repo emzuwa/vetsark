@@ -6,34 +6,29 @@ Poultry, cattle, pig.
 Livestocks. Pets.
 
 
+$('.input-group.date').datepicker({format: "dd.mm.yyyy"});
 
-// <!-- options1 = '{{ list_(stock_dictionary.keys())|tojson }}'; -->
-// <!-- options2 = '{{ list_(stock_dictionary.values()|tojson ) }}'; -->
+//document.getElementById("sales-unit").innerText = unit_prices[i];
 
-
-<!-- options1 = options1.replace("[", "") -->
-<!-- options1 = options1.replace("]", "") -->
-
-<!-- options2 = options2.replace("[", "") -->
-<!-- options2 = options2.replace("]", "") -->
-
-<!-- Decoding the html characters -->
-<!-- options1 = decodeHtml(options1); -->
-<!-- options2 = decodeHtml(options2); -->
-
-<!-- Converting to array -->
-<!-- options1 = options1.split(",") -->
-<!-- options2 = options2.split(",") -->
-
-<!-- var i; for (i=0; i < options1.length; i++) { -->
-	<!-- values in "'uy'" needed to be replaced to "uy" -->
-	<!-- arg = options1[i].replace("'", "").replace("'", ""); -->
-	<!-- if (arg == sales_item_value) { -->
-		<!-- document.getElementById("sales-unit").innerText = options2[i]; -->
-	<!-- } -->
-	
-	<!-- Leaving a space for exact matching -->
-	<!-- else if (arg == " " + sales_item_value) { -->
-		<!-- document.getElementById("sales-unit").innerText = options2[i]; -->
-	<!-- } -->
-<!-- } -->
+$(".sales-item").change(function() {		
+		items = '{{ stock_dictionary_items|tojson }}';
+		unit_prices = '{{ stock_dictionary_values|tojson }}';
+		
+		console.log("Changed !!!");
+		<!-- Convert to array for javascript. [Currently treated as string] -->
+		items = JSON.parse(items)
+		unit_prices = JSON.parse(unit_prices)
+		
+		<!-- After getting corresponding lists of items and their unit prices -->
+		sales_item = document.getElementsByClassName("sales-item");
+		sales_items_unit = document.getElementsByClassName("sales-unit");
+		
+		var n; for (n=0; n < sales_item.length; n++) {
+			
+			var i; for (i=0; i < items.length; i++) {
+				if (items[i] == sales_item[n].value) {
+					sales_items_unit[n].innerText = unit_prices[i];
+				}
+			}
+		}
+	});

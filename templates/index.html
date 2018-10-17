@@ -132,22 +132,7 @@
         <!-- Main content -->
         <section class="content">
           <!-- Small boxes (Stat box) -->
-          <div class="row">
-		    
-			<div class="col-lg-3 col-xs-6" id="customer-toggle" onclick="toggle_display(this.id)">
-              <!-- small box -->
-              <div class="small-box bg-red">
-                <div class="inner">
-                  <h3> {{ numbers[0] }} </h3>
-                  <p>Clinical Service(s)</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-			
+          <div class="row">			
             <div class="col-lg-3 col-xs-6" id="stock-toggle" onclick="toggle_display(this.id)">
               <!-- small box -->
               <div class="small-box bg-aqua">
@@ -206,87 +191,28 @@
               </div>
             </div><!-- ./col -->
 			
+			<div class="col-lg-3 col-xs-6" id="customer-toggle" onclick="toggle_display(this.id)">
+              <!-- small box -->
+              <div class="small-box bg-red">
+                <div class="inner">
+                  <h3> {{ numbers[0] }} </h3>
+                  <p>Clinical Service(s)</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+			
           </div><!-- /.row -->
           <!-- Main row -->
           <div class="row">
             <!-- Left col -->
             <section class="col-lg-12 connectedSortable">
 			
-			  <div class="box box-info" id="patient-form">
-			  <!-- Customer form -->
-				<div class="box-header">
-				  <i class="fa fa-envelope"></i>
-				  <h3 class="box-title">Record Case:</h3>
-				</div>
-				
-				
-				<div class="box-body">
-				  <form method="post" id="record-service-form">			  
-					<div class="form-group">
-					  <input type="text" class="form-control" name="client_name" placeholder="Name of Client"/>
-					</div>
-					<div class="form-group">
-					  <input type="text" class="form-control" name="animal_specie" placeholder="Specie of animal"/>
-					</div>
-					<div class="form-group">
-					  <input type="text" class="form-control" name="diagnosis" placeholder="Tentative diagnosis"/>
-					</div>
-					<div class="form-group">
-					  <!-- <input type="text" class="form-control" name="observation_date" type="datetime-local" placeholder="Date of FIRST observation"/> -->
-					  <div id="filterDate2">
-							
-							<!-- Datepicker as text field -->         
-							<div class="input-group date" data-date-format="dd.mm.yyyy">
-								<label>Observation date:</label>
-								<input  type="text" class="form-control" placeholder="dd.mm.yyyy" name="observation_date">
-								<div class="input-group-addon">
-									<span class="glyphicon glyphicon-th"></span>
-								</div>
-							</div>
-							
-						</div>
-					</div>
-					<div class="form-group">
-					  <!-- <input type="text" class="form-control" name="report_date" type="datetime-local" placeholder="Date of report"/> -->
-					  <div id="filterDate2">
-							
-							<!-- Datepicker as text field -->         
-							<div class="input-group date" data-date-format="dd.mm.yyyy">
-								<label>Report date:</label>
-								<input  type="text" class="form-control" placeholder="dd.mm.yyyy" name="report_date">
-								<div class="input-group-addon">
-									<span class="glyphicon glyphicon-th"></span>
-								</div>
-							</div>
-							
-						</div>
-					</div>
-					<div class="form-group">
-					  <label>Morbidity rate (%):</label>
-					  <input type="number" min="0" class="form-control" name="morbidity" placeholder="50"/>
-					</div>
-					<div class="form-group">
-					  <label>Mortality rate (%):</label>
-					  <input type="number" min="0" class="form-control" name="mortality" placeholder="50"/>
-					</div>
-					<div class="form-group">
-					  <input type="text" class="form-control" name="medications" placeholder="Medications"/>
-					</div>
-					<div class="form-group">
-					  <input type="number" min="0" class="form-control" name="service_cost" placeholder="Cost of Service"/>
-					</div>
-					
-					<div class="form-group">
-						<button type="button" class="btn btn-info" id="record-service-btn">Record</button>
-					</div>
-					
-				  </form>
-				</div>
-			  </div>
-
-			  
 			  <!-- Stocks form -->
-			  <div class="box box-info" id="stock-form" style="display: none">
+			  <div class="box box-info" id="stock-form">
 				<div class="box-header">
 				  <i class="fa fa-envelope"></i>
 				  <h3 class="box-title">Record Stock:</h3>
@@ -323,8 +249,8 @@
 						<div id="filterDate2">
 							
 							<!-- Datepicker as text field -->         
-							<div class="input-group date" data-date-format="dd.mm.yyyy">
-								<input  type="text" class="form-control" placeholder="dd.mm.yyyy" name="stock_date">
+							<div class="input-group date" data-date-format="dd/mm/yyyy">
+								<input type="text" class="form-control datey" name="stock_date">
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-th"></span>
 								</div>
@@ -445,39 +371,36 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-md-6">
-										<select name="sales_customer" style="width:100%" class="form-control">
-											<option selected>Select Customer</option>
-											{% for item in customers_data %}
-											<option> {{ item[0] }}</option>
-											{% endfor %}
-										</select>
+									<select name="sales_customer" style="width:100%" class="form-control">
+										<option selected>Select Customer</option>
+										{% for item in customers_data %}
+										<option> {{ item[0] }}</option>
+										{% endfor %}
+									</select>
 								</div>
+								
 								<div class="col-md-6">
-										<div class="form-group">
-												<div id="filterDate2">
-													
-													<!-- Datepicker as text field -->         
-													<div class="input-group date" data-date-format="dd.mm.yyyy">
-														<input  type="text" class="form-control" placeholder="dd.mm.yyyy" name="sales_date">
-														<div class="input-group-addon">
-															<span class="glyphicon glyphicon-th"></span>
-														</div>
-													</div>
-													
-												</div>    
+									<div class="form-group">
+										<div id="filterDate2">
+											
+											<!-- Datepicker as text field -->         
+											<div class="input-group date" data-date-format="dd/mm/yyyy">
+												<input type="text" class="form-control datey" name="sales_date">
+												<div class="input-group-addon">
+													<span class="glyphicon glyphicon-th"></span>
+												</div>
 											</div>
+											
+										</div>    
+									</div>
 								</div>
 							</div>
 							
-				    
-					  <!-- <select style="width:100%" class="form-control">
-						<option selected>Select Customer</option>
-						<option value="1">A</option>
-						<option value="2">B</option>
-						<option value="3">C</option>
-						</select> -->
+							<div class="form-group">
+								<p>Receipt no: <input  type="text" name="receipt_number" class="receipt-number"/> </p>
+							</div>
 						
-					</div>
+						</div>
 
 							
 					<div class="form-group">	
@@ -485,7 +408,6 @@
 						
 						  <thead class="thead-color">
 							  <tr>
-								<th class="table-font">Receipt</th>
 								<th class="table-font">Item</th>
 								<th class="table-font">Quantity</th>
 								<th class="table-font">Unit Price</th>
@@ -500,12 +422,8 @@
 
 						  <tbody id="sale-row-tbody">
 							  <tr class="sale-row">
-								<td style="width:10%" class="td-fonts">
-									<input  type="text" name="receipt_number" class="form-control receipt-number" style="width:100%;"/>									
-								</td>
-								
-								<td style="width:20%" class="td-fonts">
-									<select name="item-select" style="width:100%" class="form-control sales-item" id="sales-item">
+								<td style="width:30%" class="td-fonts">
+									<select name="item-select" style="width:100%" class="form-control sales-item" id="sales-item" onchange="change_units()">
 										{% for item in stock_items %}
 										<option class="sales-item-option"> {{ item }} </option>
 										{% endfor %}
@@ -575,6 +493,77 @@
                 </div>
 			  </div>
 			  
+			  <div class="box box-info" id="patient-form" style="display: none">
+			  <!-- Customer form -->
+				<div class="box-header">
+				  <i class="fa fa-envelope"></i>
+				  <h3 class="box-title">Record Case:</h3>
+				</div>
+				
+				
+				<div class="box-body">
+				  <form method="post" id="record-service-form">			  
+					<div class="form-group">
+					  <input type="text" class="form-control" name="client_name" placeholder="Name of Client"/>
+					</div>
+					<div class="form-group">
+					  <input type="text" class="form-control" name="animal_specie" placeholder="Specie of animal"/>
+					</div>
+					<div class="form-group">
+					  <input type="text" class="form-control" name="diagnosis" placeholder="Tentative diagnosis"/>
+					</div>
+					<div class="form-group">
+					  <!-- <input type="text" class="form-control" name="observation_date" type="datetime-local" placeholder="Date of FIRST observation"/> -->
+					  <div id="filterDate2">
+							
+							<!-- Datepicker as text field -->         
+							<div class="input-group date" data-date-format="dd/mm/yyyy">
+								<label>Observation date:</label>
+								<input type="text" class="form-control datey" name="observation_date">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-th"></span>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+					<div class="form-group">
+					  <!-- <input type="text" class="form-control" name="report_date" type="datetime-local" placeholder="Date of report"/> -->
+					  <div id="filterDate2">
+							
+							<!-- Datepicker as text field -->         
+							<div class="input-group date" data-date-format="dd/mm/yyyy">
+								<label>Report date:</label>
+								<input type="text" class="form-control datey" name="report_date">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-th"></span>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+					<div class="form-group">
+					  <label>Morbidity rate (%):</label>
+					  <input type="number" min="0" class="form-control" name="morbidity" placeholder="50"/>
+					</div>
+					<div class="form-group">
+					  <label>Mortality rate (%):</label>
+					  <input type="number" min="0" class="form-control" name="mortality" placeholder="50"/>
+					</div>
+					<div class="form-group">
+					  <input type="text" class="form-control" name="medications" placeholder="Medications"/>
+					</div>
+					<div class="form-group">
+					  <input type="number" min="0" class="form-control" name="service_cost" placeholder="Cost of Service"/>
+					</div>
+					
+					<div class="form-group">
+						<button type="button" class="btn btn-info" id="record-service-btn">Record</button>
+					</div>
+					
+				  </form>
+				</div>
+			  </div>
 			    
 			  <!-- Add Option (Category, Vendor and Customer) -->
 			  <div id="add-option-category" style="display:none;">
@@ -1020,9 +1009,21 @@
 
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
-	
+
+$('#datepicker').datepicker({
+        "setDate": new Date(),
+        "autoclose": true
+});
+
 	<script>	
-		 $('.input-group.date').datepicker({format: "dd.mm.yyyy"}); 
+		$('.input-group.date').datepicker({format: "dd/mm/yyyy"})
+		<!-- Setting today's date for all dates input fields: -->
+		$( document ).ready(function(){
+			dateys = document.getElementsByClassName("datey");
+			var i; for (i=0; i< dateys.length; i++){
+				dateys[i].placeholder = "22/01/2017";
+			}
+		});
 
 
 		toggle_array = ["sales-toggle", "stock-toggle", "purchases-toggle", "customer-toggle"];
@@ -1438,40 +1439,50 @@
 	
 	<!-- First the default unit price on page load. -->
 	$(document).ready(function(){
-		sales_item_value = document.getElementById("sales-item").value;
-		
 		items = '{{ stock_dictionary_items|tojson }}';
 		unit_prices = '{{ stock_dictionary_values|tojson }}';
 		
+		console.log("Changed !!!");
 		<!-- Convert to array for javascript. [Currently treated as string] -->
 		items = JSON.parse(items)
 		unit_prices = JSON.parse(unit_prices)
 		
 		<!-- After getting corresponding lists of items and their unit prices -->
-		var i; for (i=0; i < items.length; i++) {
-			if (items[i] == sales_item_value) {
-				document.getElementById("sales-unit").innerText = unit_prices[i];
+		sales_item = document.getElementsByClassName("sales-item");
+		sales_items_unit = document.getElementsByClassName("sales-unit");
+		
+		var n; for (n=0; n < sales_item.length; n++) {
+			
+			var i; for (i=0; i < items.length; i++) {
+				if (items[i] == sales_item[n].value) {
+					sales_items_unit[n].innerText = unit_prices[i];
+				}
 			}
 		}
 	})
 	
-	$("#sales-item").change(function() {
-		sales_item_value = document.getElementById("sales-item").value;
-		
+	function change_units(){
 		items = '{{ stock_dictionary_items|tojson }}';
 		unit_prices = '{{ stock_dictionary_values|tojson }}';
 		
+		console.log("Changed !!!");
 		<!-- Convert to array for javascript. [Currently treated as string] -->
 		items = JSON.parse(items)
 		unit_prices = JSON.parse(unit_prices)
 		
 		<!-- After getting corresponding lists of items and their unit prices -->
-		var i; for (i=0; i < items.length; i++) {
-			if (items[i] == sales_item_value) {
-				document.getElementById("sales-unit").innerText = unit_prices[i];
+		sales_item = document.getElementsByClassName("sales-item");
+		sales_items_unit = document.getElementsByClassName("sales-unit");
+		
+		var n; for (n=0; n < sales_item.length; n++) {
+			
+			var i; for (i=0; i < items.length; i++) {
+				if (items[i] == sales_item[n].value) {
+					sales_items_unit[n].innerText = unit_prices[i];
+				}
 			}
 		}
-	});
+	}
 	
 	<!-- #For Clinical service auto generation of amount. -->
 	$("#cs_quantity").change(function() {
