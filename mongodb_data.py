@@ -1,9 +1,14 @@
 from pymongo import MongoClient
 
+#For online use:
 # mongo_url = "mongodb://vetsarkdatabase%40gmail.com:vetsark2018.@stitch.mongodb.com:27020/?authMechanism=PLAIN&authSource=%24external&ssl=true&appName=vetsark-tpzdh:mongodb-atlas:local-userpass"
 mlab_url = "mongodb://vetsark:vetsark2018@ds133533.mlab.com:33533/vetsark"
 client = MongoClient(mlab_url)
 db = client['vetsark']
+
+#For offline use:
+# client = MongoClient()
+# db = client['vetsark']
 
 #arg is supposed to contain list of data to add to mongodb.
 def insert_data(arg, type="user_details"):

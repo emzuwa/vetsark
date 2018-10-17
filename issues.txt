@@ -4,3 +4,36 @@ unit price vs sales amount in record stocks.
 
 Poultry, cattle, pig.
 Livestocks. Pets.
+
+
+
+// <!-- options1 = '{{ list_(stock_dictionary.keys())|tojson }}'; -->
+// <!-- options2 = '{{ list_(stock_dictionary.values()|tojson ) }}'; -->
+
+
+<!-- options1 = options1.replace("[", "") -->
+<!-- options1 = options1.replace("]", "") -->
+
+<!-- options2 = options2.replace("[", "") -->
+<!-- options2 = options2.replace("]", "") -->
+
+<!-- Decoding the html characters -->
+<!-- options1 = decodeHtml(options1); -->
+<!-- options2 = decodeHtml(options2); -->
+
+<!-- Converting to array -->
+<!-- options1 = options1.split(",") -->
+<!-- options2 = options2.split(",") -->
+
+<!-- var i; for (i=0; i < options1.length; i++) { -->
+	<!-- values in "'uy'" needed to be replaced to "uy" -->
+	<!-- arg = options1[i].replace("'", "").replace("'", ""); -->
+	<!-- if (arg == sales_item_value) { -->
+		<!-- document.getElementById("sales-unit").innerText = options2[i]; -->
+	<!-- } -->
+	
+	<!-- Leaving a space for exact matching -->
+	<!-- else if (arg == " " + sales_item_value) { -->
+		<!-- document.getElementById("sales-unit").innerText = options2[i]; -->
+	<!-- } -->
+<!-- } -->

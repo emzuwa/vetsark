@@ -85,7 +85,7 @@ def dashboard():
         
         #Check if Email and Password is correct:
         result = list(db.user_details.find({"email":email, "password":password}))
-        if result == []: render_template('signin_error.html', email=email)
+        if result == []: return render_template('signin_error.html', email=email)
         else:
             #Get user id:
             user_id = result[0]["user_id"]
@@ -122,6 +122,8 @@ def dashboard():
     for row in stock_data:
         if row[1] not in stock_dictionary:
             stock_dictionary[row[1]] = row[3]
+    stock_dictionary_items = list(stock_dictionary.keys())
+    stock_dictionary_values = [float(value) for value in list(stock_dictionary.values())]
     #################
     
     ################# Getting Category data:
@@ -175,6 +177,10 @@ def dashboard():
             item["total_value"], item["outstanding"] ]
         sales_data.append(arg)
     #################
+    
+    #Number of records for Clinical service, stocks, sales:
+    numbers = [ len(list(db.clinical_service.find())), len(list(db.stocks.find())), len(list(db.sales.find())) ]
+    
     #No time: (deal with this later.)
     view_stock_data = stock_data
     return render_template('index.html', view_stock_data=view_stock_data,
@@ -182,10 +188,14 @@ def dashboard():
                             vendors_data=vendors_data,
                             customers_data=customers_data,
                             stock_items=stock_items,
-                            stock_dictionary=stock_dictionary,
+                            
+                            stock_dictionary_items=stock_dictionary_items,
+                            stock_dictionary_values=stock_dictionary_values,
+                            
                             service_data=service_data,
                             sales_data=sales_data,
                             
+                            numbers = numbers,
                             user_name = session["username"],
 
                             list_=list)

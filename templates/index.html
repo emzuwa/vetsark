@@ -138,7 +138,7 @@
               <!-- small box -->
               <div class="small-box bg-red">
                 <div class="inner">
-                  <h3>00</h3>
+                  <h3> {{ numbers[0] }} </h3>
                   <p>Clinical Service(s)</p>
                 </div>
                 <div class="icon">
@@ -152,7 +152,7 @@
               <!-- small box -->
               <div class="small-box bg-aqua">
                 <div class="inner">
-                  <h3>00</h3>
+                  <h3> {{ numbers[1] }} </h3>
                   <p>Stocks</p>
                 </div>
                 <div class="icon">
@@ -162,6 +162,7 @@
               </div>
             </div><!-- ./col -->
 			
+			<!-- Remove this carefully(*js*) later. -->
             <div class="col-lg-3 col-xs-6" id="purchases-toggle" onclick="toggle_display(this.id)" style="display:none">
               <!-- small box -->
               <div class="small-box bg-green">
@@ -180,11 +181,26 @@
               <!-- small box -->
               <div class="small-box bg-yellow">
                 <div class="inner">
-                  <h3>00</h3>
+                  <h3>{{ numbers[2] }}</h3>
                   <p>Sales</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-person-add"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+			
+			<!-- Add toggle function for this later. -->
+			<div class="col-lg-3 col-xs-6" id="accounting-toggle"> <!-- onclick="toggle_display(this.id)"> -->
+              <!-- small box -->
+              <div class="small-box bg-green">
+                <div class="inner">
+                  <h3>$<sup style="font-size: 20px">%</sup></h3>
+                  <p>Accounting</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
@@ -484,11 +500,11 @@
 
 						  <tbody id="sale-row-tbody">
 							  <tr class="sale-row">
-								<td class="td-fonts">
+								<td style="width:10%" class="td-fonts">
 									<input  type="text" name="receipt_number" class="form-control receipt-number" style="width:100%;"/>									
 								</td>
 								
-								<td style="width:35%" class="td-fonts">
+								<td style="width:20%" class="td-fonts">
 									<select name="item-select" style="width:100%" class="form-control sales-item" id="sales-item">
 										{% for item in stock_items %}
 										<option class="sales-item-option"> {{ item }} </option>
@@ -498,37 +514,38 @@
 								<!-- #To get selected value for sale -->
 								<input type="hidden" name="sales_item" class="sales-item-input" />
 								
-								<td class="td-fonts"> <input name="sales_quantity" type="number" min="0" class="form-control sales-quantity"  value="1" id="sales-quantity"/> </td>
-								<td style="width:20%" class="td-fonts"> <input name="sales_price" type="number" min="0" class="form-control sales-unit"  value="1" id="sales-unit"/> </td>
-								<td style="width:20%" class="td-fonts"> <label name="amount-label" class="form-control sales-amount" id="sales-amount"/>1<label> </td>
+								<td style="width:10%" class="td-fonts"> <input name="sales_quantity" type="number" min="0" class="form-control sales-quantity"  value="1" id="sales-quantity"/> </td>
+								<!-- <td style="width:20%" class="td-fonts"> <input name="sales_price" type="number" min="0" class="form-control sales-unit"  value="1" id="sales-unit"/> </td> -->
+								<td style="width:10%" class="td-fonts"> <label name="sales_price" class="form-control sales-unit"  value="1" id="sales-unit">1</label> </td>
+								<td style="width:10%" class="td-fonts"> <label name="amount-label" class="form-control sales-amount" id="sales-amount">1</label> </td>
 								<!-- To get label input: -->
 								<input type="hidden" name="amount" id="amount" />
 								
-								<td style="width:20%" class="td-fonts"> <input name="discount_value" type="number" min="0" class="form-control discount-value" id="discount-value"/> </td>
+								<td style="width:10%" class="td-fonts"> <input name="discount_value" type="number" min="0" class="form-control discount-value" id="discount-value"/> </td>
 								
 								
-								<td style="width:20%" class="td-fonts"> <label class="form-control total-value-label" id="total-value"/>1</label> </td>
+								<td style="width:10%" class="td-fonts"> <label class="form-control total-value-label" id="total-value">1</label> </td>
 								<!-- Input for total value label to pass to Flask -->
 								<input name="total_value" type="hidden" class="form-control total-value-input" id="total-value-input"/>
 								
 								
-								<td style="width:20%" class="td-fonts"> <input name="amount_paid" type="number" min="0" class="form-control amount-paid" id="amount-paid"/> </td>
+								<td style="width:10%" class="td-fonts"> <input name="amount_paid" type="number" min="0" class="form-control amount-paid" id="amount-paid"/> </td>
 								
-								<td style="width:20%" class="td-fonts"> <label class="form-control outstanding-label" id="outstanding-label"/>1</label> </td>
+								<td style="width:10%" class="td-fonts"> <label class="form-control outstanding-label" id="outstanding-label">1</label> </td>
 								<!-- Input for outstanding balance label to pass to Flask -->
 								<input name="outstanding" type="hidden" class="form-control outstanding" id="outstanding"/>
 							  </tr>
 							  
-							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
-							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
-							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
-							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
-							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
-							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
-							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
-							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
-							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
-							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
+							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
+							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
+							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
+							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
+							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
+							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
+							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
+							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
+							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
+							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
 						  </tbody>
 						</table>
 					</div>
@@ -1211,7 +1228,7 @@
 			sales4_list = []
 			price = document.getElementsByClassName("sales-unit");
 			var i; for (i=0; i < price.length; i++) {
-				sales4_list.push(price[i].value)
+				sales4_list.push(price[i].innerText)
 			}
 			sales4.value = sales4_list
 			
@@ -1383,7 +1400,7 @@
 		
 		var i; for (i=0; i < sales_unit_tags.length; i++) {
 			
-			sales_amount = parseFloat(sales_unit_tags[i].value) * parseFloat(sales_quantity_tags[i].value);
+			sales_amount = parseFloat(sales_unit_tags[i].innerText) * parseFloat(sales_quantity_tags[i].value);
 			
 			sales_total = sales_amount - ((discount[i].value/100) * sales_amount)
 			
@@ -1416,38 +1433,42 @@
 		txt.innerHTML = html;
 		return txt.value;
 	}
-
+	
+	<!-- For generating unit price of sales item automatically. -->
+	
+	<!-- First the default unit price on page load. -->
+	$(document).ready(function(){
+		sales_item_value = document.getElementById("sales-item").value;
+		
+		items = '{{ stock_dictionary_items|tojson }}';
+		unit_prices = '{{ stock_dictionary_values|tojson }}';
+		
+		<!-- Convert to array for javascript. [Currently treated as string] -->
+		items = JSON.parse(items)
+		unit_prices = JSON.parse(unit_prices)
+		
+		<!-- After getting corresponding lists of items and their unit prices -->
+		var i; for (i=0; i < items.length; i++) {
+			if (items[i] == sales_item_value) {
+				document.getElementById("sales-unit").innerText = unit_prices[i];
+			}
+		}
+	})
+	
 	$("#sales-item").change(function() {
 		sales_item_value = document.getElementById("sales-item").value;
 		
-		options1 = '{{ list_(stock_dictionary.keys()) }}';
-		options2 = '{{ list_(stock_dictionary.values()) }}';
-			
-		options1 = options1.replace("[", "")
-		options1 = options1.replace("]", "")
+		items = '{{ stock_dictionary_items|tojson }}';
+		unit_prices = '{{ stock_dictionary_values|tojson }}';
 		
-		options2 = options2.replace("[", "")
-		options2 = options2.replace("]", "")
-		
-		<!-- Decoding the html characters -->
-		options1 = decodeHtml(options1);
-		options2 = decodeHtml(options2);
-		
-		<!-- Converting to array -->
-		options1 = options1.split(",")
-		options2 = options2.split(",")
+		<!-- Convert to array for javascript. [Currently treated as string] -->
+		items = JSON.parse(items)
+		unit_prices = JSON.parse(unit_prices)
 		
 		<!-- After getting corresponding lists of items and their unit prices -->
-		var i; for (i=0; i < options1.length; i++) {
-			<!-- values in "'uy'" needed to be replaced to "uy" -->
-			arg = options1[i].replace("'", "").replace("'", "");
-			if (arg == sales_item_value) {
-				document.getElementById("sales-unit").value = options2[i];
-			}
-			
-			<!-- Leaving a space for exact matching -->
-			else if (arg == " " + sales_item_value) {
-				document.getElementById("sales-unit").value = options2[i];
+		var i; for (i=0; i < items.length; i++) {
+			if (items[i] == sales_item_value) {
+				document.getElementById("sales-unit").innerText = unit_prices[i];
 			}
 		}
 	});
