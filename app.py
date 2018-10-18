@@ -172,9 +172,13 @@ def dashboard():
     result = list(db.sales.find({"user_id":user_id}))
     #Get sales data to list, Omiting some items:
     sales_data = []
+    sales_total, sales_outstanding = 0, 0
     for item in result:
         arg = [ item["receipt_no"], item["date"], item["customer"], item["item"],
             item["total_value"], item["outstanding"] ]
+            
+        sales_total += float(item["total_value"])
+        sales_outstanding += float(item["outstanding"])
         sales_data.append(arg)
     #################
     
@@ -194,6 +198,8 @@ def dashboard():
                             
                             service_data=service_data,
                             sales_data=sales_data,
+                            sales_total=sales_total,
+                            sales_outstanding=sales_outstanding,
                             
                             numbers = numbers,
                             user_name = session["username"],

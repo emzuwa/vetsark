@@ -434,24 +434,24 @@
 								<!-- #To get selected value for sale -->
 								<input type="hidden" name="sales_item" class="sales-item-input" />
 								
-								<td style="width:10%" class="td-fonts"> <input name="sales_quantity" type="number" min="0" class="form-control sales-quantity"  value="1" id="sales-quantity"/> </td>
+								<td style="width:10%" class="td-fonts"> <input name="sales_quantity" type="number" min="0" class="form-control sales-quantity"  value="0" id="sales-quantity"/> </td>
 								<!-- <td style="width:20%" class="td-fonts"> <input name="sales_price" type="number" min="0" class="form-control sales-unit"  value="1" id="sales-unit"/> </td> -->
-								<td style="width:10%" class="td-fonts"> <label name="sales_price" class="form-control sales-unit"  value="1" id="sales-unit">1</label> </td>
-								<td style="width:10%" class="td-fonts"> <label name="amount-label" class="form-control sales-amount" id="sales-amount">1</label> </td>
+								<td style="width:10%" class="td-fonts"> <label name="sales_price" class="form-control sales-unit"  id="sales-unit">0</label> </td>
+								<td style="width:10%" class="td-fonts"> <label name="amount-label" class="form-control sales-amount" id="sales-amount">0</label> </td>
 								<!-- To get label input: -->
 								<input type="hidden" name="amount" id="amount" />
 								
 								<td style="width:10%" class="td-fonts"> <input name="discount_value" type="number" min="0" class="form-control discount-value" id="discount-value"/> </td>
 								
 								
-								<td style="width:10%" class="td-fonts"> <label class="form-control total-value-label" id="total-value">1</label> </td>
+								<td style="width:10%" class="td-fonts"> <label class="form-control total-value-label" id="total-value">0</label> </td>
 								<!-- Input for total value label to pass to Flask -->
 								<input name="total_value" type="hidden" class="form-control total-value-input" id="total-value-input"/>
 								
 								
 								<td style="width:10%" class="td-fonts"> <input name="amount_paid" type="number" min="0" class="form-control amount-paid" id="amount-paid"/> </td>
 								
-								<td style="width:10%" class="td-fonts"> <label class="form-control outstanding-label" id="outstanding-label">1</label> </td>
+								<td style="width:10%" class="td-fonts"> <label class="form-control outstanding-label" id="outstanding-label">0</label> </td>
 								<!-- Input for outstanding balance label to pass to Flask -->
 								<input name="outstanding" type="hidden" class="form-control outstanding" id="outstanding"/>
 							  </tr>
@@ -782,6 +782,9 @@
 					<option value="2">This Month</option>
 					<option value="3">This Year</option>
 				</select><br>
+				
+				<label>Total Sales value today is: N{{ sales_total }}</label> <br>
+				<label>Total Sales outstanding today is: N{{ sales_outstanding }}</label>
 				
 				<div class="form-group">	
 					<table width="100%" class="table">
@@ -1459,6 +1462,11 @@ $('#datepicker').datepicker({
 			var i; for (i=0; i < items.length; i++) {
 				if (items[i] == sales_item[n].value) {
 					sales_items_unit[n].innerText = unit_prices[i];
+					
+					<!-- #Extra for amount paid; but only initially -->
+					<!-- Do for on next sale clicked also -->
+					<!-- document.getElementsByClassName("amount-paid")[n].value = unit_prices[i]; -->
+					
 				}
 			}
 		}
