@@ -418,13 +418,14 @@
 								<th class="table-font">Total Value</th>
 								<th class="table-font">Amount Paid</th>
 								<th class="table-font">Outstanding Balance</th>
+								<th class="table-font">Payment Type</th>
 							  </tr>
 						  </thead>
 							
 
 						  <tbody id="sale-row-tbody">
 							  <tr class="sale-row">
-								<td style="width:30%" class="td-fonts">
+								<td style="width:20%" class="td-fonts">
 									<select name="item-select" style="width:100%" class="form-control sales-item" id="sales-item" onchange="change_units()">
 										{% for item in stock_items %}
 										<option class="sales-item-option"> {{ item }} </option>
@@ -454,6 +455,14 @@
 								<td style="width:10%" class="td-fonts"> <label class="form-control outstanding-label" id="outstanding-label">0</label> </td>
 								<!-- Input for outstanding balance label to pass to Flask -->
 								<input name="outstanding" type="hidden" class="form-control outstanding" id="outstanding"/>
+								
+								<td style="width:10%" class="td-fonts">
+									<select name="item-select" style="width:100%" class="form-control payment-type" id="payment-type">
+										<option class="sales-item-option"> Cash </option>
+										<option class="sales-item-option"> POS </option>
+										<option class="sales-item-option"> Bank Transfer </option>
+									</select>
+								</td>
 							  </tr>
 							  
 							  <tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr><tr class="sale-tr-dynamic"></tr>
