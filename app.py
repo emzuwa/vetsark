@@ -173,6 +173,7 @@ def dashboard():
     #Get sales data to list, Omiting some items:
     sales_data = []
     sales_total, sales_outstanding = 0, 0
+    
     for item in result:
         arg = [ item["receipt_no"], item["date"], item["customer"], item["item"],
             item["total_value"], item["outstanding"] ]
@@ -183,7 +184,10 @@ def dashboard():
     #################
     
     #Number of records for Clinical service, stocks, sales:
-    numbers = [ len(list(db.clinical_service.find())), len(list(db.stocks.find())), len(list(db.sales.find())) ]
+    numbers = [ len(list(db.clinical_service.find({"user_id":user_id}))),
+                len(list(db.stocks.find({"user_id":user_id}))),
+                len(list(db.sales.find({"user_id":user_id})))
+              ]
     
     #No time: (deal with this later.)
     view_stock_data = stock_data
