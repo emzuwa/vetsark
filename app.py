@@ -257,10 +257,11 @@ def record_service():
     
     return jsonify({'status':'OK','answer':"stuff"})
 
-@app.route('/record_sales', methods=['POST'])
+@app.route('/record_sales', methods=['POST', 'GET'])
 def record_sales():
     get_user_id = session["user_id"]
     
+    global printer_rows, printer_total, printer_amount_paid, printer_outstanding, sales_customer
     if request.method == 'POST':
         sales_date = request.form["sales_date"]
         sales_customer = request.form["sales_customer"]
@@ -277,7 +278,7 @@ def record_sales():
         
         payment_type = request.form["10"]#["payment_type"]
         # arg = [get_user_id, receipt_number, sales_date, sales_customer, sales_item, sales_quantity, sales_price, amount, discount_value, total_value, amount_paid, outstanding, payment_type]
-            
+        
         if len(sales_item.split(',')) > 1:
             for index, item in enumerate(range(len(sales_item.split(',')))):
                 print(index)
@@ -293,17 +294,34 @@ def record_sales():
                 
                 insert_data(arg, type="sales")
                 
-                #For printing:
-                items = sales_item.split(',')[index]
-                quantities = sales_quantity.split(',')[index]
-                total_values = total_value.split(',')[index]
                 
-                printer_rows = [(items[n], quantities[n], total_values[n]) for n in range(len(items))]
-                printer_total = sum([int(i) for i in total_values])
-                printer_amount_paid = sum([int(i) for i in amount_paid.split(',')[index]])
         else:
             arg = [get_user_id, receipt_number, sales_date, sales_customer, sales_item, sales_quantity, sales_price, amount, discount_value, total_value, amount_paid, outstanding, payment_type]
             insert_data(arg, type="sales")
+        
+        #For printing:
+        items = sales_item.split(',')
+        quantities = sales_quantity.split(',')
+        total_values = total_value.split(',')
+        
+                
+        if len(sales_item.split(',')) > 1:
+            print("hjdh\n\n\n\n")
+            print(items)
+            print(quantities)
+            print(total_values)
+            
+            print("Outstanging", outstanding.split(',')[index])
+            printer_rows = [(items[n], quantities[n], total_values[n]) for n in range(len(items))]
+            print("printer_rows:", printer_rows)
+            printer_total = sum([float(i) for i in total_values])
+            printer_amount_paid = sum([float(i) for i in amount_paid.split(',')])
+            printer_outstanding = sum([float(i) for i in outstanding.split(',')])
+        else:            
+            printer_rows = [(sales_item, sales_quantity, total_value)]
+            printer_total = total_value
+            printer_amount_paid = amount_paid
+            printer_outstanding = outstanding
         
         
         #*********************************************************#
@@ -313,18 +331,19 @@ def record_sales():
         # if type(response) == str:
             # print("Inavlid Customer Number in the database")
             #*********************************************************#
-    
-    return render_template('receipt.html')
+    return render_template('receipt.html', printer_rows=printer_rows,
+                        printer_total=printer_total, printer_amount_paid=printer_amount_paid,
+                        business_name=session["username"], sales_customer=sales_customer)
+                        
     # return jsonify({'status':'OK','answer':"stuff"})
     
-@app.route('/print_receipt', methods=['POST'])
-def print_receipt():
-    business_name = "Emeka and Sons Limited"
-    items = [ ['Paracetamol', '1', '100'], ['Paracetamol', '1', '100'], ['Paracetamol', '1', '100'] ]
-    total_sales = "1000"
+    # return redirect(url_for('print_receipt'))
     
-    return render_template('receipt.html', business_name=business_name,
-                            items=items, total_sales=total_sales)
+# @app.route('/print_receipt', methods=['POST', 'GET'])
+# def print_receipt():
+    # return render_template('receipt.html', printer_rows=printer_rows,
+                        # printer_total=printer_total, printer_amount_paid=printer_amount_paid,
+                        # business_name=session["username"], sales_customer=sales_customer)
                             
 @app.route('/add_category', methods=['POST'])
 def add_category():

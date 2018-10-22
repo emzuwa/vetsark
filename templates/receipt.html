@@ -16,16 +16,16 @@
 	   @page
 	   {
 		size: 3.5in 6in;
-		size: portrait;
+		size: landscape;
 	  }
 	}
 </style>
 
 <body>
 	<div>
-	<label> <strong>Company Name</strong> </label> </br>
+	<label> <strong>{{ business_name }}</strong> </label> </br>
 	<label>Sales Receipt</label> </br>
-	<label>Customer: Regular</label>
+	<label>Customer: {{ sales_customer }}</label>
 	</div>
 	<div>
 		<table>
@@ -33,26 +33,23 @@
 				<th>Item</th>
 				<th>Quantity</th>
 				<th>Cost</th>
-			<thead>
-			
+			<thead>			
+
 			<tbody>
+				{% for row in printer_rows %}
 				<tr>
-					<td>Paracetamol</td>
-					<td>5</td>
-					<td>N500</td>
+					{% for item in row %}
+					<td> {{ item }}</td>
+					{% endfor %}
 				</tr>
-				<tr>
-					<td>Book</td>
-					<td>2</td>
-					<td>N300</td>
-				</tr>
+				{% endfor %}
 			</tbody>
 		</table>
 	</div>
 	
-	<div> <label>Total: N800</label> </div>
-	<div> <label>Amount paid: N800</label> </div>
-	<div> <label>Outstanding: N0</label> </div>
+	<div> <label>Total: {{ printer_total }} </label> </div>
+	<div> <label>Amount paid: {{ printer_amount_paid }}</label> </div>
+	<div> <label>Outstanding: {{ printer_outstanding }}</label> </div>
 </body>
 
 <script>
@@ -60,3 +57,16 @@
 		window.print();
 	}
 </script>
+
+<!-- <tbody> -->
+	<!-- <tr> -->
+		<!-- <td>Paracetamol</td> -->
+		<!-- <td>5</td> -->
+		<!-- <td>N500</td> -->
+	<!-- </tr> -->
+	<!-- <tr> -->
+		<!-- <td>Book</td> -->
+		<!-- <td>2</td> -->
+		<!-- <td>N300</td> -->
+	<!-- </tr> -->
+<!-- </tbody> -->
