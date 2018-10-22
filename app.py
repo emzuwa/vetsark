@@ -316,7 +316,7 @@ def record_sales():
             print("printer_rows:", printer_rows)
             printer_total = sum([float(i) for i in total_values])
             printer_amount_paid = sum([float(i) for i in amount_paid.split(',')])
-            printer_outstanding = sum([float(i) for i in outstanding.split(',')])
+            printer_outstanding = printer_total - printer_amount_paid
         else:            
             printer_rows = [(sales_item, sales_quantity, total_value)]
             printer_total = total_value
@@ -333,6 +333,7 @@ def record_sales():
             #*********************************************************#
     return render_template('receipt.html', printer_rows=printer_rows,
                         printer_total=printer_total, printer_amount_paid=printer_amount_paid,
+                        printer_outstanding=printer_outstanding,
                         business_name=session["username"], sales_customer=sales_customer)
                         
     # return jsonify({'status':'OK','answer':"stuff"})
