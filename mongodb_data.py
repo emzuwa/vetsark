@@ -30,7 +30,7 @@ def insert_data(arg, type="user_details"):
     
     elif type == "stocks":
         data = {"user_id":arg[0], "vendor":arg[1], "category":arg[2], "date":arg[3], "name":arg[4],
-                "quantity":arg[5], "unit_cost":arg[6], "amount":arg[7]}
+                "quantity":arg[5], "unit_cost":arg[6], "unit_sales":arg[7], "amount":arg[8]}
         stocks.insert_one(data)
     
     elif type == "purchases":
@@ -41,8 +41,10 @@ def insert_data(arg, type="user_details"):
     elif type == "sales":
         data = {"user_id":arg[0], "receipt_no":arg[1], "date":arg[2], "customer":arg[3], "item":arg[4],
             "quantity":arg[5], "price":arg[6], "amount":arg[7], "discount":arg[8],
-            "total_value":arg[9], "amount_paid":arg[10], "outstanding":arg[11]}
+            "total_value":arg[9], "amount_paid":arg[10], "outstanding":arg[11], 
+            "payment_type":arg[12]}
         sales.insert_one(data)
+        print("Sales indeed inserted.")
     
     elif type == "clinical_service":
         data = {"user_id":arg[0], "client_name":arg[1], "specie":arg[2], "diagnosis":arg[3],
@@ -71,10 +73,10 @@ def insert_data(arg, type="user_details"):
         
 if __name__ == "__main__":        
     #Insert admin data:
-    # data = {"user_id":0, "name":"vetsark", "email":"vetsarkdatabase@gmail.com",
-                    # "password":"vetsark2018", "user_category":"Others",
-                    # "prime_category":"Prime Elite"}
-    # db.user_details.insert_one(data)
+    data = {"user_id":0, "name":"vetsark", "email":"vetsarkdatabase@gmail.com",
+                    "password":"vetsark2018", "user_category":"Others",
+                    "prime_category":"Prime Elite"}
+    db.user_details.insert_one(data)
     
     pass
     

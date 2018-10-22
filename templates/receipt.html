@@ -1,0 +1,62 @@
+<style>
+	table {
+		border-collapse: collapse;
+	}
+
+	table, td, th {
+		border: 1px solid black;
+	}
+	
+	label { text-align: center; }
+
+	body { width: 305px; height: 650px; }
+	
+	@media print 
+	{
+	   @page
+	   {
+		size: 3.5in 6in;
+		size: portrait;
+	  }
+	}
+</style>
+
+<body>
+	<div>
+	<label> <strong>Company Name</strong> </label> </br>
+	<label>Sales Receipt</label> </br>
+	<label>Customer: Regular</label>
+	</div>
+	<div>
+		<table>
+			<thead>
+				<th>Item</th>
+				<th>Quantity</th>
+				<th>Cost</th>
+			<thead>
+			
+			<tbody>
+				<tr>
+					<td>Paracetamol</td>
+					<td>5</td>
+					<td>N500</td>
+				</tr>
+				<tr>
+					<td>Book</td>
+					<td>2</td>
+					<td>N300</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div> <label>Total: N800</label> </div>
+	<div> <label>Amount paid: N800</label> </div>
+	<div> <label>Outstanding: N0</label> </div>
+</body>
+
+<script>
+	window.onload = function(){
+		window.print();
+	}
+</script>

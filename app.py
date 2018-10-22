@@ -112,7 +112,7 @@ def dashboard():
     #Get stock data to list, omitting vendor and date column:
     stock_data = []
     for item in result:
-        arg = [ item["category"], item["name"], item["quantity"], item["unit_cost"], item["amount"] ]
+        arg = [ item["category"], item["name"], item["quantity"], item["unit_cost"], item["unit_sales"], item["amount"] ]
         stock_data.append(arg)
     
     stock_items = set([item[1] for item in stock_data])
@@ -121,7 +121,7 @@ def dashboard():
     stock_dictionary = {}
     for row in stock_data:
         if row[1] not in stock_dictionary:
-            stock_dictionary[row[1]] = row[3]
+            stock_dictionary[row[1]] = row[4]
     stock_dictionary_items = list(stock_dictionary.keys())
     stock_dictionary_values = [float(value) for value in list(stock_dictionary.values())]
     #################
@@ -176,7 +176,7 @@ def dashboard():
     
     for item in result:
         arg = [ item["receipt_no"], item["date"], item["customer"], item["item"],
-            item["total_value"], item["outstanding"] ]
+            item["total_value"], item["outstanding"], item["payment_type"] ]
             
         sales_total += float(item["total_value"])
         sales_outstanding += float(item["outstanding"])
@@ -221,11 +221,13 @@ def record_stock():
         stock_date = request.form["stock_date"]
         name = request.form["stock1"]
         quantity = request.form["stock2"]
-        cost = request.form["stock3"]
-        # amount = request.form["stock4"]
-        amount = float(quantity) * float(cost)
+        purchase_cost = request.form["stock3"]
+        selling_cost = request.form["stock4"]
         
-        arg = [get_user_id, vendor, category, stock_date, name, quantity, cost, amount]
+        # amount = request.form["stock5"]
+        amount = float(quantity) * float(purchase_cost)
+        
+        arg = [get_user_id, vendor, category, stock_date, name, quantity, purchase_cost, selling_cost, amount]
         
         print("To be added to stocks:", arg, "\n\n\n\n\n\n")
         #Insert data to mongodb database:
@@ -273,8 +275,8 @@ def record_sales():
         amount_paid = request.form["8"]#["amount_paid"]
         outstanding = request.form["9"]#["outstanding"]
         
-        
-        # arg = [get_user_id, receipt_number, sales_date, sales_customer, sales_item, sales_quantity, sales_price, amount, discount_value, total_value, amount_paid, outstanding]
+        payment_type = request.form["10"]#["payment_type"]
+        # arg = [get_user_id, receipt_number, sales_date, sales_customer, sales_item, sales_quantity, sales_price, amount, discount_value, total_value, amount_paid, outstanding, payment_type]
             
         if len(sales_item.split(',')) > 1:
             for index, item in enumerate(range(len(sales_item.split(',')))):
@@ -283,17 +285,26 @@ def record_sales():
                 data = [sales_item.split(',')[index], sales_quantity.split(',')[index],
                         sales_price.split(',')[index], amount.split(',')[index],
                         discount_value.split(',')[index], total_value.split(',')[index],
-                        amount_paid.split(',')[index], outstanding.split(',')[index]
+                        amount_paid.split(',')[index], outstanding.split(',')[index],
+                        payment_type.split(',')[index]
                         ]
                  
                 arg = [get_user_id, receipt_number, sales_date, sales_customer] + data
+                
                 insert_data(arg, type="sales")
+                
+                #For printing:
+                items = sales_item.split(',')[index]
+                quantities = sales_quantity.split(',')[index]
+                total_values = total_value.split(',')[index]
+                
+                printer_rows = [(items[n], quantities[n], total_values[n]) for n in range(len(items))]
+                printer_total = sum([int(i) for i in total_values])
+                printer_amount_paid = sum([int(i) for i in amount_paid.split(',')[index]])
         else:
-            arg = [get_user_id, receipt_number, sales_date, sales_customer, sales_item, sales_quantity, sales_price, amount, discount_value, total_value, amount_paid, outstanding]
+            arg = [get_user_id, receipt_number, sales_date, sales_customer, sales_item, sales_quantity, sales_price, amount, discount_value, total_value, amount_paid, outstanding, payment_type]
             insert_data(arg, type="sales")
         
-        #Insert data to mongodb database:
-        # insert_data(arg, type="sales")
         
         #*********************************************************#
         #Deal with this soon
@@ -302,9 +313,19 @@ def record_sales():
         # if type(response) == str:
             # print("Inavlid Customer Number in the database")
             #*********************************************************#
-        
-    return jsonify({'status':'OK','answer':"stuff"})
-
+    
+    return render_template('receipt.html')
+    # return jsonify({'status':'OK','answer':"stuff"})
+    
+@app.route('/print_receipt', methods=['POST'])
+def print_receipt():
+    business_name = "Emeka and Sons Limited"
+    items = [ ['Paracetamol', '1', '100'], ['Paracetamol', '1', '100'], ['Paracetamol', '1', '100'] ]
+    total_sales = "1000"
+    
+    return render_template('receipt.html', business_name=business_name,
+                            items=items, total_sales=total_sales)
+                            
 @app.route('/add_category', methods=['POST'])
 def add_category():
     get_user_id = session["user_id"]

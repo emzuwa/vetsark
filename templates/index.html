@@ -269,10 +269,13 @@
                       <input type="number" min="0" class="form-control" name="stock2" placeholder="Quantity at hand" id="cs_quantity"/>
                     </div>
 					<div class="form-group">
-                      <input type="number" min="0" class="form-control" name="stock3" placeholder="Unit Cost" id="cs_unit"/>
+                      <input type="number" min="0" class="form-control" name="stock3" placeholder="Purchase Cost per unit" id="purchase_per_unit"/>
                     </div>
 					<div class="form-group">
-                      <!-- <input type="number" min="0" class="form-control" name="stock4" placeholder="Amount"/> -->
+                      <input type="number" min="0" class="form-control" name="stock4" placeholder="Sales Cost per unit" id="sales_per_unit"/>
+                    </div>
+					<div class="form-group">
+                      <!-- <input type="number" min="0" class="form-control" name="stock5" placeholder="Amount"/> -->
 					  <label>Amount:</label> <label id="cs_amount">0</label>
                     </div>
 					
@@ -373,7 +376,7 @@
 								<div class="col-md-6">
 									<label>Select Customer:</label>
 									<select name="sales_customer" style="width:100%" class="form-control">
-										<!-- <option selected>Select Customer</option> -->
+										<option selected>Regular</option>
 										{% for item in customers_data %}
 										<option> {{ item[0] }}</option>
 										{% endfor %}
@@ -497,7 +500,7 @@
 						<input id="sales2" name="2" value="" style="display:none"/><input id="sales7" name="7" value="" style="display:none"/>
 						<input id="sales3" name="3" value="" style="display:none"/><input id="sales8" name="8" value="" style="display:none"/>
 						<input id="sales4" name="4" value="" style="display:none"/><input id="sales9" name="9" value="" style="display:none"/>
-						<input id="sales5" name="5" value="" style="display:none"/>
+						<input id="sales5" name="5" value="" style="display:none"/><input id="sales10" name="10" value="" style="display:none"/>
 						
 					</div>
 					
@@ -706,6 +709,7 @@
 						<th class="table-font">Name</th>
 						<th class="table-font">Quantity</th>
 						<th class="table-font">Cost Price</th>
+						<th class="table-font">Selling Price</th>
 						<th class="table-font">Amount</th>
 					</tr>
 				</thead>
@@ -805,6 +809,7 @@
 							<th class="table-font">Item</th>
 							<th class="table-font">Total value</th>
 							<th class="table-font">Outstanding</th>
+							<th class="table-font">Payment Type</th>
 						  </tr>
 					  </thead>
 					  
@@ -1275,7 +1280,7 @@ $('#datepicker').datepicker({
 			}
 			sales7.value = sales7_list
 			
-			<!-- Sales total value for flask: -->
+			<!-- Sales Amount paid for flask: -->
 			sales8 = document.getElementById("sales8");
 			sales8_list = []
 			amount_paid = document.getElementsByClassName("amount-paid");
@@ -1284,7 +1289,7 @@ $('#datepicker').datepicker({
 			}
 			sales8.value = sales8_list
 			
-			<!-- Sales total value for flask: -->
+			<!-- Sales Outstanding value for flask: -->
 			sales9 = document.getElementById("sales9");
 			sales9_list = []
 			outstanding = document.getElementsByClassName("outstanding");
@@ -1292,6 +1297,15 @@ $('#datepicker').datepicker({
 				sales9_list.push(outstanding[i].value)
 			}
 			sales9.value = sales9_list
+			
+			<!-- Sales Payment type for flask: -->
+			sales10 = document.getElementById("sales10");
+			sales10_list = []
+			payment_type = document.getElementsByClassName("payment-type");
+			var i; for (i=0; i < payment_type.length; i++) {
+				sales10_list.push(payment_type[i].value)
+			}
+			sales10.value = sales10_list
 			
 			
 			e.preventDefault();
@@ -1457,7 +1471,6 @@ $('#datepicker').datepicker({
 		items = '{{ stock_dictionary_items|tojson }}';
 		unit_prices = '{{ stock_dictionary_values|tojson }}';
 		
-		console.log("Changed !!!");
 		<!-- Convert to array for javascript. [Currently treated as string] -->
 		items = JSON.parse(items)
 		unit_prices = JSON.parse(unit_prices)
@@ -1485,7 +1498,6 @@ $('#datepicker').datepicker({
 		items = '{{ stock_dictionary_items|tojson }}';
 		unit_prices = '{{ stock_dictionary_values|tojson }}';
 		
-		console.log("Changed !!!");
 		<!-- Convert to array for javascript. [Currently treated as string] -->
 		items = JSON.parse(items)
 		unit_prices = JSON.parse(unit_prices)
@@ -1506,7 +1518,7 @@ $('#datepicker').datepicker({
 	
 	<!-- #For Clinical service auto generation of amount. -->
 	$("#cs_quantity").change(function() {
-		unit_value = document.getElementById("cs_unit").value;
+		unit_value = document.getElementById("purchase_per_unit").value;
 		quantity_value = document.getElementById("cs_quantity").value;
 		
 		amount = parseFloat(unit_value) * parseFloat(quantity_value);
@@ -1514,8 +1526,8 @@ $('#datepicker').datepicker({
 		document.getElementById("cs_amount").innerText = amount;
 	});
 	
-	$("#cs_unit").change(function() {
-		unit_value = document.getElementById("cs_unit").value;
+	$("#purchase_per_unit").change(function() {
+		unit_value = document.getElementById("purchase_per_unit").value;
 		quantity_value = document.getElementById("cs_quantity").value;
 		
 		amount = parseFloat(unit_value) * parseFloat(quantity_value);
