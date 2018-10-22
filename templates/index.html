@@ -1310,16 +1310,16 @@ $('#datepicker').datepicker({
 			
 			<!-- e.preventDefault(); -->
 
-			$.ajax({
-				type: "POST",
-				url: "/record_sales",
-				data: $(this).serialize(),
-				success: console.log("Sent post request succefully."),
+			<!-- $.ajax({ -->
+				<!-- type: "POST", -->
+				<!-- url: "/record_sales", -->
+				<!-- data: $(this).serialize(), -->
+				<!-- success: console.log("Sent post request succefully."), -->
 				
-				error: function(error) {
-					console.log(error);
-				}
-			});
+				<!-- error: function(error) { -->
+					<!-- console.log(error); -->
+				<!-- } -->
+			<!-- }); -->
 		});
 	});
 	

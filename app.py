@@ -261,7 +261,7 @@ def record_service():
 def record_sales():
     get_user_id = session["user_id"]
     
-    global printer_rows, printer_total, printer_amount_paid, printer_outstanding, sales_customer
+    # global printer_rows, printer_total, printer_amount_paid, printer_outstanding, sales_customer
     if request.method == 'POST':
         sales_date = request.form["sales_date"]
         sales_customer = request.form["sales_customer"]
@@ -296,7 +296,9 @@ def record_sales():
                 
                 
         else:
+            print("Single arg print:\n\n")
             arg = [get_user_id, receipt_number, sales_date, sales_customer, sales_item, sales_quantity, sales_price, amount, discount_value, total_value, amount_paid, outstanding, payment_type]
+            print(arg)
             insert_data(arg, type="sales")
         
         #For printing:

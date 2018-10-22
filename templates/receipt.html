@@ -9,23 +9,25 @@
 	
 	label { text-align: center; }
 
-	body { width: 305px; height: 650px; }
+	<!-- body { width: 305px; height: 650px; } -->
 	
 	@media print 
 	{
 	   @page
 	   {
-		size: 3.5in 6in;
+		size: 3.5in 5in;
 		size: landscape;
 	  }
 	}
+	
+	body { border: solid black; }
 </style>
 
 <body>
-	<div>
-	<label> <strong>{{ business_name }}</strong> </label> </br>
-	<label>Sales Receipt</label> </br>
-	<label>Customer: {{ sales_customer }}</label>
+	<div style="text-align:center;">
+		<label> <strong>{{ business_name }}</strong> </label> </br>
+		<label>Sales Receipt</label> </br>
+		<label>Customer: {{ sales_customer }}</label>
 	</div>
 	<div>
 		<table>
