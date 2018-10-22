@@ -296,9 +296,7 @@ def record_sales():
                 
                 
         else:
-            print("Single arg print:\n\n")
             arg = [get_user_id, receipt_number, sales_date, sales_customer, sales_item, sales_quantity, sales_price, amount, discount_value, total_value, amount_paid, outstanding, payment_type]
-            print(arg)
             insert_data(arg, type="sales")
         
         #For printing:
